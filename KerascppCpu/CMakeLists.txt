@@ -12,8 +12,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 
-#set(BOOST_URL "https://dl.bintray.com/boostorg/release/1.74.0/source/boost_1_74_0.zip" CACHE STRING "Boost download URL")
-
 # If we add a library a to be built from the source files listed with other proj dependency 
 #add_library(a b.h b.cpp)
 #add_dependencies(a c)
@@ -66,4 +64,4 @@ target_sources(KerascppCpu
 #target_link_libraries(NeuralNetsCpu PUBLIC ${Boost_LIBRARIES})
 
 # Tell cmake to install our binary into the bin directory of the install.
-install(TARGETS KerascppCpu DESTINATION bin)
+install(TARGETS KerascppCpu DESTINATION ../bin)
