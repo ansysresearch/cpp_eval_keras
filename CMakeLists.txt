@@ -18,18 +18,16 @@ add_subdirectory(KerascppCpu)
 # add the executable
 add_executable(TestingKerasCpuDeployment "")
 target_sources(TestingKerasCpuDeployment
-    PRIVATE
-    test.cc
-)
+    PRIVATE test.cc)
 
 
 target_link_libraries(TestingKerasCpuDeployment PUBLIC KerascppCpu)
 
 # express includes, see src folder specified to pickup the includes, -I
 target_include_directories(TestingKerasCpuDeployment PUBLIC
-                          "${PROJECT_BINARY_DIR}"
                           "${PROJECT_SOURCE_DIR}/KerascppCpu/src"
                           )
+
 
 # Tell cmake to install our binary into the bin directory of the install.
 #install(TARGETS TestingKerasCpuDeployment DESTINATION bin)
