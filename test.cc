@@ -1,5 +1,5 @@
-#include "src/model.h"
-#include "src/tensor.h"
+#include "model.h"
+#include "tensor.h"
 #include<typeinfo>
 #include<iostream>
 #include<vector>
@@ -11,7 +11,7 @@ using keras2cpp::Tensor;
 
 int main() {
     // Initialize model.
-    Model model = Model::load("../models/time_predictor.model");
+    Model model = Model::load("models/time_predictor.model");
 
     int test_samples = 10;
 

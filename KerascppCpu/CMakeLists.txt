@@ -54,14 +54,5 @@ target_sources(KerascppCpu
 	src/maxPooling2d.h
 ) 
  
-# express includes, see src folder specified to pickup the includes, -I
-#target_include_directories(KerascppCpuLib PUBLIC "${PROJECT_SOURCE_DIR}/src")
-
-# include boost headers only as PRIVATE includes, -I
-# target_include_directories(KerascppCpuLib PRIVATE ${BOOST_SOURCE})						  					  
-
-# express linking libs
-#target_link_libraries(NeuralNetsCpu PUBLIC ${Boost_LIBRARIES})
-
 # Tell cmake to install our binary into the bin directory of the install.
-install(TARGETS KerascppCpu DESTINATION ../bin)
+#install(TARGETS KerascppCpu DESTINATION ../bin)
