@@ -1,10 +1,12 @@
 ﻿#pragma once
-#include "../baseLayer.h"
+#include "baseLayer.h"
 namespace keras2cpp{
     namespace layers{
-        class Flatten final : public Layer<Flatten> {
+        class ELU final : public Layer<ELU> {
+            float alpha_{1.f};
+
         public:
-            using Layer<Flatten>::Layer;
+            ELU(Stream& file);
             Tensor operator()(const Tensor& in) const noexcept override;
         };
     }

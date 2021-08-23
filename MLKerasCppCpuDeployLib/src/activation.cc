@@ -18,7 +18,9 @@ namespace keras2cpp{
         }
 
         Tensor Activation::operator()(const Tensor& in) const noexcept {
-            Tensor out {in.size()};
+            // Tensor out {in.size()};
+			Tensor out;
+			out.resize(in.size());
             out.dims_ = in.dims_;
 
             switch (type_) {

@@ -69,7 +69,8 @@ namespace keras2cpp {
         kassert(other.ndim() == 2);
         kassert(dims_[1] == other.dims_[1]);
 
-        Tensor tmp {dims_[0], other.dims_[0]};
+        //Tensor tmp {dims_[0], other.dims_[0]};
+		Tensor tmp = Tensor::empty(dims_[0], other.dims_[0]);
 
         auto ts = cast(tmp.dims_[1]);
         auto is = cast(dims_[1]);

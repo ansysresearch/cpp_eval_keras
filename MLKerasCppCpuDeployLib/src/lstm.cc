@@ -25,18 +25,20 @@ namespace keras2cpp{
             size_t out_dim = bo_.dims_[1];
             size_t steps = in.dims_[0];
 
-            Tensor c_tm1 {1, out_dim};
+			//Tensor c_tm1{ 1, out_dim };
+			Tensor c_tm1 = Tensor::empty(1, out_dim);
 
             if (!return_sequences_) {
-                Tensor out {1, out_dim};
+                //Tensor out (1, out_dim);
+				Tensor out = Tensor::empty(1, out_dim);
                 for (size_t s = 0; s < steps; ++s)
                     std::tie(out, c_tm1) = step(in.select(s), out, c_tm1);
                 return out.flatten();
             }
 
             auto out = Tensor::empty(steps, out_dim);
-            Tensor last {1, out_dim};
-
+            // Tensor last (1, out_dim);
+			Tensor last = Tensor::empty(1, out_dim);
             for (size_t s = 0; s < steps; ++s) {
                 std::tie(last, c_tm1) = step(in.select(s), last, c_tm1);
                 out.data_.insert(out.end(), last.begin(), last.end());
