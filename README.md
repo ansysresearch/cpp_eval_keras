@@ -20,7 +20,8 @@ Compatibility: The library is compatible with Keras 2.x (all versions) and C++ 1
 How to build?
 
 For Building on windows or Linux just use the top level cmake file which first builds the library and shows how to use it in the exe.
-If Cmake is not installed, install it for Windows or Linux first. 
+If Cmake(3.1 or higher) is not installed, install it for Windows or Linux first.  On Ubuntu, you can simply run the following command. 
+sudo apt-get install cmake
 
 On Linux:
 1) Clone this repo.
