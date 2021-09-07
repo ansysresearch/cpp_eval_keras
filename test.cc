@@ -15,15 +15,19 @@ std::vector<float> read_txt(std::string fname_scale) {
 	std::vector<float> contianer;
 	string line;
 
+	cout << fname_scale << "\n";
 	ifstream myfile(fname_scale);
 	if (myfile.is_open())
-	{
+	{	
+		i = 0;
 		while ( getline(myfile, line) )
 		{
-			cout << line << '\n';
+			cout << i << line << " ";
 			contianer.push_back(std::stof(line));
 		}
+		out << " "  << '\n';
 		myfile.close();
+		i += 1;
 	}
 
 	return contianer;
@@ -46,8 +50,8 @@ std::vector<std::vector<float>> read_csv(std::string filename){
 
     // Helper vars
     std::string line, colname;
-    float val;
 
+    cout << "reading_test_data" << "\n";
 
     // Read the column names
     if(myFile.good())
@@ -61,18 +65,19 @@ std::vector<std::vector<float>> read_csv(std::string filename){
         // Extract each column name
         while(std::getline(ss, colname, ',')){
             
-            cout << colname<< "\n";
+            cout << colname<< " ";
             // Initialize and add <colname, int vector> pairs to result
             head.push_back(colname);
             // content.push_back(std::vector<float> {});
         }
+        cout << " " << "\n";
     }
 
     std::vector<std::vector<float>> contents;
 
     // Read data, line by line
     while(std::getline(myFile, line))
-    {
+    {	
         // Create a stringstream of the current line
         std::stringstream ss(line);
         
@@ -83,7 +88,7 @@ std::vector<std::vector<float>> read_csv(std::string filename){
         // Extract each integer
         while(ss >> val){
             
-            cout << val<< "\n";
+            cout << val<< " ";
 
             // Add the current integer to the 'colIdx' column's values vector
             content.push_back(val);
@@ -94,6 +99,7 @@ std::vector<std::vector<float>> read_csv(std::string filename){
             // Increment the column index
             // colIdx++;
         }
+        cout << " " << "\n";
         contents.push_back(content);
     }
 
@@ -124,7 +130,7 @@ int main() {
     std::vector<float> mean = read_txt(fname_scale);
 
 	// load data
-	string fname_test_data = string("/home/ansysai/hjiang/projects/cpp_eval_keras/data/") + target + solver + string("test_data.csv");
+	string fname_test_data = string("/home/ansysai/hjiang/projects/cpp_eval_keras/data/") + target + solver + string("test_data_samples.csv");
 	std::vector<std::vector<float>> test_data = read_csv(fname_test_data);
 
 	// inference
@@ -135,6 +141,7 @@ int main() {
 		Tensor in{size};
 		
 		// preprocess
+		cout << "preprocess" << "\n";
 		for (int j = 0; j < size; ++j)
 		{
 			test_data.at(i).at(j) = (test_data.at(i).at(j) - mean.at(j))/scale.at(j);
@@ -147,6 +154,7 @@ int main() {
 		Tensor out = model(in);
 
 		//get the class
+		cout << "postprocess" << "\n";
 		int max_cls = 0;
 		int max_score = 0;
 		for (int k = 0; k < 5; ++k)
