@@ -60,9 +60,11 @@ int main() {
 		
 		// preprocess
 		for (int j = 0; j < size; ++j)
-		{
+		{	
 			test_data.at(i).at(j) = (test_data.at(i).at(j) - mean.at(j))/scale.at(j);
+			cout << test_data.at(i).at(j) << " "
 		}
+		cout << " " << "\n"
 
 		// run the model
 		in.data_ = test_data.at(i);
