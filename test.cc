@@ -37,21 +37,25 @@ int main() {
     // Initialize model.
     string target = "time_"; // this should be the input from MAPDL, ["time_", "mem_"]
     string solver = "sparse_"; // this should be the input from MAPDL, ["sparse_", "model_", "PCG_"]
+    string preprocess;
+    std::vector<float> mean;
+    std::vector<float> scale;
+    int large_feature[7];
 
     // preprocess preparation
     if (target == "memory_")
     {
-	    string preprocess = "standardize"; // this can be changed based on what we want
+	    preprocess = "standardize"; // this can be changed based on what we want
 
 	    string fname_scale = string("./data/") + target + solver + string("scale.txt"); //change the path for your purpose
-	    std::vector<float> scale = read_txt(fname_scale);
+	    scale = read_txt(fname_scale);
 
 	    string fname_mean = string("./data/") + target + solver + string("mean.txt"); //change the path for your purpose
-	    std::vector<float> mean = read_txt(fname_mean);
+	    mean = read_txt(fname_mean);
 
     } 
     else {
-	    string preprocess = "log10"; // this can be changed based on what we want    	
+	    preprocess = "log10"; // this can be changed based on what we want    	
 	    if (solver == "model_")
 	    {
 	    	int large_feature[7] = {1, 2, 3, 5, 9, 10, 11};
@@ -63,7 +67,7 @@ int main() {
 
     string fname;
     fname = string("../models/") + target + string("predictor_") + solver + string("solver_") + preprocess + string(".model");
-    // fname = "./models/example.model";
+    fname = "./models/example.model";
 
     Model model = Model::load(fname);
 
@@ -79,7 +83,7 @@ int main() {
 		int m = 0;
 		
 		// preprocess
-		if (preporcess == "standardize")
+		if (preprocess == "standardize")
 		{
 			for (int j = 0; j < size; ++j)
 			{	
@@ -94,7 +98,7 @@ int main() {
 				{
 					if(j == large_feature[m])
 					{
-						test_data.at(i).at(j) = log10(test_data.at(i).at(j) + 1)
+						test_data.at(i).at(j) = log10(test_data.at(i).at(j) + 1);
 						cout << test_data.at(i).at(j) << " ";
 						m++;
 						break;
@@ -115,7 +119,7 @@ int main() {
 		//get the class
 		if (target == "time_")
 		{	
-			output = out.data_
+			float output = out.data_;
 			cout << output << "\n";
 		}
 		else
