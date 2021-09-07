@@ -40,7 +40,7 @@ int main() {
     string preprocess;
     std::vector<float> mean;
     std::vector<float> scale;
-    int large_feature[7];
+    // int large_feature[7];
 
     // preprocess preparation
     if (target == "memory_")
