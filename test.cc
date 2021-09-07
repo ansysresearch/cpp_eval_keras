@@ -97,9 +97,7 @@ int main() {
 				{
 					if(j == large_feature[m])
 					{							
-						cout << test_data.at(i).at(j) << " ";
 						test_data.at(i).at(j) = log10(test_data.at(i).at(j) + 1);
-						break;
 					}
 				}
 				cout << test_data.at(i).at(j) << " ";
