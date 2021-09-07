@@ -96,15 +96,12 @@ int main() {
 			{	
 				for (int m = 0; m < large_feature.size(); ++m)
 				{
-					cout <<  large_feature.at(m) << "\n";
 					if(j == large_feature.at(m))
-					{	
-						cout << j << " "<< large_feature.at(m) << "\n";					
+					{				
 						test_data.at(i).at(j) = log10(test_data.at(i).at(j) + 1);
 					}
-					cout << j << m << "\n";	
 				}
-				cout << test_data.at(i).at(j) << " " << "\n";
+				cout << test_data.at(i).at(j) << " ";
 			}
 			cout << " " << "\n";
 		}
