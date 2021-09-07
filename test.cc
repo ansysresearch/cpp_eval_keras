@@ -50,7 +50,8 @@ std::vector<std::vector<float>> read_csv(std::string filename){
 
     // Helper vars
     std::string line, colname;
-    int val;
+    float val;
+    // float fl;
 
     cout << "reading_test_data" << "\n";
 
@@ -87,7 +88,7 @@ std::vector<std::vector<float>> read_csv(std::string filename){
         
     	std::vector<float> content;
         // Extract each integer
-        while(ss >> val){
+        while(std::stof(ss) >> val){
             
             cout << val<< " ";
 
