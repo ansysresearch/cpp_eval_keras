@@ -100,12 +100,10 @@ int main() {
 					if(j == large_feature[m])
 					{
 						test_data.at(i).at(j) = log10(test_data.at(i).at(j) + 1);
-						cout << test_data.at(i).at(j) << " ";
 						break;
 					}
-					cout << test_data.at(i).at(j) << " ";
 				}
-
+				cout << test_data.at(i).at(j) << " ";
 			}
 			cout << " " << "\n";
 		}
