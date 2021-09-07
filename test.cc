@@ -94,7 +94,7 @@ int main() {
 		} else {
 			for (int j = 0; j < size; ++j)
 			{	
-				while (m < large_feature.size())
+				while (m < int(sizeof(arr)/sizeof(arr[0])))
 				{
 					if(j == large_feature[m])
 					{
@@ -119,7 +119,7 @@ int main() {
 		//get the class
 		if (target == "time_")
 		{	
-			float output = out.data_;
+			float output = out.data_.at(0);
 			cout << output << "\n";
 		}
 		else
