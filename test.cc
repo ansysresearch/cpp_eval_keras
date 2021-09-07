@@ -41,6 +41,7 @@ int main() {
     std::vector<float> mean;
     std::vector<float> scale;
     // int large_feature[7];
+    std::vector<float> large_feature;
 
     // preprocess preparation
     if (target == "memory_")
@@ -58,10 +59,10 @@ int main() {
 	    preprocess = "log10"; // this can be changed based on what we want    	
 	    if (solver == "model_")
 	    {
-	    	int large_feature[7] = {1, 2, 3, 5, 9, 10, 11};
+	    	large_feature = {1, 2, 3, 5, 9, 10, 11};
 	    }
 	    else {
-	    	int large_feature[7] = {1, 2, 4, 5, 9, 10, 11};
+	    	large_feature = {1, 2, 4, 5, 9, 10, 11};
 	    }
     }
 
@@ -93,12 +94,12 @@ int main() {
 		} else {
 			for (int j = 0; j < size; ++j)
 			{	
-				for (int m = 0; m < int(sizeof(large_feature)/sizeof(large_feature[0])); ++m)
+				for (int m = 0; m < large_feature.size(); ++m)
 				{
-					cout <<  large_feature[m] << "\n";
-					if(j == large_feature[m])
+					cout <<  large_feature.at(m) << "\n";
+					if(j == large_feature.at(m))
 					{	
-						cout << j << " "<< large_feature[m] << "\n";					
+						cout << j << " "<< large_feature.at(m) << "\n";					
 						test_data.at(i).at(j) = log10(test_data.at(i).at(j) + 1);
 					}
 					cout << j << m << "\n";	
