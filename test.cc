@@ -49,10 +49,10 @@ int main() {
     std::vector<float> mean = read_txt(fname_mean);
 
 	// load data
-	std::vector<std::vector<float>> test_data = {{4.0, 636978, 319378, 6, 97, 153367, 0.240773, 1, 0, 472, 213458, 269659, 0, 0, 0.423341}}
+	std::vector<std::vector<float>> test_data = {{4.0, 636978, 319378, 6, 97, 153367, 0.240773, 1, 0, 472, 213458, 269659, 0, 0, 0.423341}};
 
 	// inference
-	std::vector<float> results;
+	std::vector<int> results;
 	for (int i = 0; i < test_data.size(); ++i)
 	{	
 		int size = test_data.at(i).size();
@@ -64,7 +64,7 @@ int main() {
 			test_data.at(i).at(j) = (test_data.at(i).at(j) - mean.at(j))/scale.at(j);
 			cout << test_data.at(i).at(j) << " "
 		}
-		cout << " " << "\n"
+		cout << " " << "\n";
 
 		// run the model
 		in.data_ = test_data.at(i);
@@ -83,7 +83,7 @@ int main() {
 		}
 		results.push_back(max_cls);
 
-		cout << max_cls << "\n"
+		cout << max_cls << "\n";
 	}
 
    return 0;
