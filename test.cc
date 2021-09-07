@@ -11,7 +11,7 @@ using namespace std;
 using keras2cpp::Model;
 using keras2cpp::Tensor;
 
-std::vector<float> read_txt(std::string filename) {
+std::vector<float> read_txt(std::string fname_scale) {
 	std::vector<float> contianer;
 	string line;
 
@@ -21,23 +21,22 @@ std::vector<float> read_txt(std::string filename) {
 		while ( getline(myfile, line) )
 		{
 			cout << line << '\n';
-			contianer.push_back(float(line));
+			contianer.push_back(std::stof(line));
 		}
 		myfile.close();
 	}
 
-	return container;
+	return contianer;
 
 }
 
 // this function should be removed when delievered
-std::vector<std::vector<int>> read_csv(std::string filename){
+std::vector<std::vector<float>> read_csv(std::string filename){
     // Reads a CSV file into a vector of <string, vector<int>> pairs where
     // each pair represents <column name, column values>
 
     // Create a vector of <string, int vector> pairs to store the result
-    std::vector<std::vector<int>> result;
-    std::vector<std::vector<string>> head;
+    std::vector<string> head;
 
     // Create an input filestream
     std::ifstream myFile(filename);
@@ -110,7 +109,8 @@ int main() {
     string target = "time_";
     string solver = "sparse_";
     string fname;
-    fname = string("../models/") + target + string("predictor_") + solver + string("solver.model");
+    // fname = string("../models/") + target + string("predictor_") + solver + string("solver.model");
+    fname = "../models/example.model"
 
     Model model = Model::load(fname);
 
@@ -131,28 +131,28 @@ int main() {
 	std::vector<float> results;
 	for (int i = 0; i < test_data.size(); ++i)
 	{	
-		int size = contents.at(i).size();
+		int size = test_data.at(i).size();
 		Tensor in{size};
 		
 		// preprocess
-		for (j = 0; j < size; ++j)
+		for (int j = 0; j < size; ++j)
 		{
-			contents.at(i).at(j) = (contents.at(i).at(j) - mean.at(j))/scale.at(j);
+			test_data.at(i).at(j) = (test_data.at(i).at(j) - mean.at(j))/scale.at(j);
 		}
 
 		// run the model
-		in.data_ = contents.at(i);
+		in.data_ = test_data.at(i);
 		Tensor out = model(in);
 
 		//get the class
 		int max_cls = 0;
 		int max_score = 0;
-		for (k = 0; k < 5; ++k)
+		for (int k = 0; k < 5; ++k)
 		{
 			cout << out.data_[k] << " ";
 			if (out.data_[k] > max_score)
 			{
-				max_score = out.data[k];
+				max_score = out.data_[k];
 				max_cls = i;
 			}
 		}
@@ -161,9 +161,9 @@ int main() {
 	}
 
 	// write the output
-    std::ofstream output_file("results/test_results.txt");
-    std::ostream_iterator<std::string> output_iterator(output_file, "\n");
-    std::copy(example.begin(), example.end(), output_iterator);
+    // std::ofstream output_file("results/test_results.txt");
+    std::ofstream outFile("results/test_results.txt");
+    for (const auto &e : v) outFile << e << "\n";
 
 	// std::vector<float> results
 	// for (int j = 0; j < test_data)
