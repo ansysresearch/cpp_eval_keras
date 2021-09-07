@@ -88,7 +88,7 @@ std::vector<std::vector<float>> read_csv(std::string filename){
         
     	std::vector<float> content;
         // Extract each integer
-        while(std::stof(ss) >> val){
+        while(ss >> val){
             
             cout << val<< " ";
 
