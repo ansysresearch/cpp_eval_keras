@@ -128,7 +128,7 @@ int main() {
     std::vector<float> scale = read_txt(fname_scale);
 
     string fname_mean = string("/home/ansysai/hjiang/projects/cpp_eval_keras/data/") + target + solver + string("mean.txt");
-    std::vector<float> mean = read_txt(fname_scale);
+    std::vector<float> mean = read_txt(fname_mean);
 
 	// load data
 	string fname_test_data = string("/home/ansysai/hjiang/projects/cpp_eval_keras/data/") + target + solver + string("test_data_samples.csv");
