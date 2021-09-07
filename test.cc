@@ -138,7 +138,7 @@ int main() {
 		for (int j = 0; j < size; ++j)
 		{
 			test_data.at(i).at(j) = (test_data.at(i).at(j) - mean.at(j))/scale.at(j);
-			cout << out.data_[k] << " ";
+			cout << out.data_[j] << " ";
 		}
 		cout << " " << "\n";
 
@@ -159,7 +159,6 @@ int main() {
 			}
 		}
 		cout << " " << "\n";
-
 		results.push_back(max_cls);
 	}
 
