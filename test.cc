@@ -4,111 +4,30 @@
 #include<iostream>
 #include<vector>
 #include<ctime>
-#include<sstream> // for testing, should be removed when delivered
-#include<utility> // for testing, should be removed when delivered
 using namespace std;
 
 using keras2cpp::Model;
 using keras2cpp::Tensor;
 
+
 std::vector<float> read_txt(std::string fname_scale) {
 	std::vector<float> contianer;
 	string line;
 
-	cout << fname_scale << "\n";
 	ifstream myfile(fname_scale);
 	if (myfile.is_open())
 	{	
 		int i = 0;
 		while ( getline(myfile, line) )
 		{
-			cout << i << line << " ";
 			contianer.push_back(std::stof(line));
 		}
-		cout << " "  << '\n';
 		myfile.close();
 		i += 1;
 	}
 
 	return contianer;
 
-}
-
-// this function should be removed when delievered
-std::vector<std::vector<float>> read_csv(std::string filename){
-    // Reads a CSV file into a vector of <string, vector<int>> pairs where
-    // each pair represents <column name, column values>
-
-    // Create a vector of <string, int vector> pairs to store the result
-    std::vector<string> head;
-
-    // Create an input filestream
-    std::ifstream myFile(filename);
-
-    // Make sure the file is open
-    if(!myFile.is_open()) throw std::runtime_error("Could not open file");
-
-    // Helper vars
-    std::string line, colname;
-    float val;
-    // float fl;
-
-    cout << "reading_test_data" << "\n";
-
-    // Read the column names
-    if(myFile.good())
-    {
-        // Extract the first line in the file
-        std::getline(myFile, line);
-
-        // Create a stringstream from line
-        std::stringstream ss(line);
-
-        // Extract each column name
-        while(std::getline(ss, colname, ',')){
-            
-            cout << colname<< " ";
-            // Initialize and add <colname, int vector> pairs to result
-            head.push_back(colname);
-            // content.push_back(std::vector<float> {});
-        }
-        cout << " " << "\n";
-    }
-
-    std::vector<std::vector<float>> contents;
-
-    // Read data, line by line
-    while(std::getline(myFile, line))
-    {	
-        // Create a stringstream of the current line
-        std::stringstream ss(line);
-        
-        // Keep track of the current column index
-        // int colIdx = 0;
-        
-    	std::vector<float> content;
-        // Extract each integer
-        while(ss >> val){
-            
-            cout << val<< " ";
-
-            // Add the current integer to the 'colIdx' column's values vector
-            content.push_back(val);
-            
-            // If the next token is a comma, ignore it and move on
-            if(ss.peek() == ',') ss.ignore();
-            
-            // Increment the column index
-            // colIdx++;
-        }
-        cout << " " << "\n";
-        contents.push_back(content);
-    }
-
-    // Close file
-    myFile.close();
-
-    return contents;
 }
 
 
@@ -118,22 +37,19 @@ int main() {
     string solver = "sparse_";
     string fname;
     // fname = string("../models/") + target + string("predictor_") + solver + string("solver.model");
-    fname = "/home/ansysai/hjiang/projects/cpp_eval_keras/models/example.model";
+    fname = "./models/example.model";
 
     Model model = Model::load(fname);
 
-    int test_samples = 10;
-
     // preprocess preparation
-    string fname_scale = string("/home/ansysai/hjiang/projects/cpp_eval_keras/data/") + target + solver + string("scale.txt");
+    string fname_scale = string("./data/") + target + solver + string("scale.txt"); //change the path for your purpose
     std::vector<float> scale = read_txt(fname_scale);
 
-    string fname_mean = string("/home/ansysai/hjiang/projects/cpp_eval_keras/data/") + target + solver + string("mean.txt");
+    string fname_mean = string("./data/") + target + solver + string("mean.txt"); //change the path for your purpose
     std::vector<float> mean = read_txt(fname_mean);
 
 	// load data
-	string fname_test_data = string("/home/ansysai/hjiang/projects/cpp_eval_keras/data/") + target + solver + string("test_data_samples.csv");
-	std::vector<std::vector<float>> test_data = read_csv(fname_test_data);
+	std::vector<std::vector<float>> test_data = {{4.0, 636978, 319378, 6, 97, 153367, 0.240773, 1, 0, 472, 213458, 269659, 0, 0, 0.423341}}
 
 	// inference
 	std::vector<float> results;
@@ -143,59 +59,30 @@ int main() {
 		Tensor in{size};
 		
 		// preprocess
-		cout << "preprocess" << "\n";
 		for (int j = 0; j < size; ++j)
 		{
 			test_data.at(i).at(j) = (test_data.at(i).at(j) - mean.at(j))/scale.at(j);
-			cout << test_data.at(i).at(j) << " ";
 		}
-		cout << " " << "\n";
 
 		// run the model
 		in.data_ = test_data.at(i);
 		Tensor out = model(in);
 
 		//get the class
-		cout << "postprocess" << "\n";
 		int max_cls = 0;
 		int max_score = 0;
 		for (int k = 0; k < 5; ++k)
 		{
-			cout << out.data_[k] << " ";
 			if (out.data_[k] > max_score)
 			{
 				max_score = out.data_[k];
-				max_cls = i;
+				max_cls = k;
 			}
 		}
-		cout << " " << "\n";
 		results.push_back(max_cls);
+
+		cout << max_cls << "\n"
 	}
-
-	// write the output
-    // std::ofstream output_file("results/test_results.txt");
-    std::ofstream outFile("results/test_results.txt");
-    for (const auto &e : results) outFile << e << "\n";
-
-	// std::vector<float> results
-	// for (int j = 0; j < test_data)
- //    for (int j=0; j<test_samples; j++){
-	// Tensor in{2};
-	// srand(time(0));
-	// std::vector<float> vect;	
-	// for (int i=0; i<2; i++){
-	// 	float rd = 2.0*(rand())/(RAND_MAX) - 1.0;
-	// 	vect.push_back(rd);
-	// }
-	// in.data_ = vect;
-	// float ground_truth = pow(in.data_[0], 2.0) + pow(in.data_[1], 2.0);
-
-	// Tensor out = model(in);
-
-	// std::cout << "Test sample:" << j+1 << ", Input 1:" << in.data_[0] << ", Input 2:" << in.data_[1] << ", Prediction:" << out.data_[0] << ", Ground truth:"<< ground_truth <<std::endl; 
-
-
- //    }
 
    return 0;
 }
