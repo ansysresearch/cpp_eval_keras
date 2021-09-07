@@ -110,7 +110,7 @@ int main() {
     string solver = "sparse_";
     string fname;
     // fname = string("../models/") + target + string("predictor_") + solver + string("solver.model");
-    fname = "../models/example.model"
+    fname = "../models/example.model";
 
     Model model = Model::load(fname);
 
@@ -163,7 +163,7 @@ int main() {
 	// write the output
     // std::ofstream output_file("results/test_results.txt");
     std::ofstream outFile("results/test_results.txt");
-    for (const auto &e : v) outFile << e << "\n";
+    for (const auto &e : results) outFile << e << "\n";
 
 	// std::vector<float> results
 	// for (int j = 0; j < test_data)
