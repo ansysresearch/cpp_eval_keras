@@ -100,9 +100,9 @@ int main() {
 						cout << j << large_feature[m] << "\n";					
 						test_data.at(i).at(j) = log10(test_data.at(i).at(j) + 1);
 					}
-					cout << m << "\n";	
+					cout << j << m << "\n";	
 				}
-				cout << test_data.at(i).at(j) << " ";
+				cout << test_data.at(i).at(j) << " " << "\n";
 			}
 			cout << " " << "\n";
 		}
