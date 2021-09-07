@@ -19,13 +19,13 @@ std::vector<float> read_txt(std::string fname_scale) {
 	ifstream myfile(fname_scale);
 	if (myfile.is_open())
 	{	
-		i = 0;
+		int i = 0;
 		while ( getline(myfile, line) )
 		{
 			cout << i << line << " ";
 			contianer.push_back(std::stof(line));
 		}
-		out << " "  << '\n';
+		cout << " "  << '\n';
 		myfile.close();
 		i += 1;
 	}
@@ -50,6 +50,7 @@ std::vector<std::vector<float>> read_csv(std::string filename){
 
     // Helper vars
     std::string line, colname;
+    int val;
 
     cout << "reading_test_data" << "\n";
 
