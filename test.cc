@@ -80,7 +80,6 @@ int main() {
 	{	
 		int size = test_data.at(i).size();
 		Tensor in{size};
-		int m = 0;
 		
 		// preprocess
 		if (preprocess == "standardize")
@@ -94,17 +93,17 @@ int main() {
 		} else {
 			for (int j = 0; j < size; ++j)
 			{	
-				while (m < int(sizeof(large_feature)/sizeof(large_feature[0])))
+				cout << int(sizeof(large_feature)/sizeof(large_feature[0])) << "\n";
+
+				for (int m = 0; m < int(sizeof(large_feature)/sizeof(large_feature[0])); ++m)
 				{
 					if(j == large_feature[m])
 					{
 						test_data.at(i).at(j) = log10(test_data.at(i).at(j) + 1);
 						cout << test_data.at(i).at(j) << " ";
-						m++;
 						break;
 					}
 					cout << test_data.at(i).at(j) << " ";
-					m++;
 				}
 
 			}
