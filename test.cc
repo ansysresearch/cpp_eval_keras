@@ -93,8 +93,6 @@ int main() {
 		} else {
 			for (int j = 0; j < size; ++j)
 			{	
-				cout << int(sizeof(large_feature)/sizeof(large_feature[0])) << "\n";
-
 				for (int m = 0; m < int(sizeof(large_feature)/sizeof(large_feature[0])); ++m)
 				{
 					if(j == large_feature[m])
