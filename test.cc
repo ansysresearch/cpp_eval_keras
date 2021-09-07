@@ -94,7 +94,7 @@ int main() {
 		} else {
 			for (int j = 0; j < size; ++j)
 			{	
-				while (m < int(sizeof(arr)/sizeof(arr[0])))
+				while (m < int(sizeof(large_feature)/sizeof(large_feature[0])))
 				{
 					if(j == large_feature[m])
 					{
