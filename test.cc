@@ -4,6 +4,8 @@
 #include<iostream>
 #include<vector>
 #include<ctime>
+#include <math.h>
+
 using namespace std;
 
 using keras2cpp::Model;
@@ -33,23 +35,40 @@ std::vector<float> read_txt(std::string fname_scale) {
 
 int main() {
     // Initialize model.
-    string target = "time_";
-    string solver = "sparse_";
+    string target = "time_"; // this should be the input from MAPDL, ["time_", "mem_"]
+    string solver = "sparse_"; // this should be the input from MAPDL, ["sparse_", "model_", "PCG_"]
+
+    // preprocess preparation
+    if (target == "memory_")
+    {
+	    string preprocess = "standardize"; // this can be changed based on what we want
+
+	    string fname_scale = string("./data/") + target + solver + string("scale.txt"); //change the path for your purpose
+	    std::vector<float> scale = read_txt(fname_scale);
+
+	    string fname_mean = string("./data/") + target + solver + string("mean.txt"); //change the path for your purpose
+	    std::vector<float> mean = read_txt(fname_mean);
+
+    } 
+    else {
+	    string preprocess = "log10"; // this can be changed based on what we want    	
+	    if (solver == "model_")
+	    {
+	    	int large_feature[7] = {1, 2, 3, 5, 9, 10, 11};
+	    }
+	    else {
+	    	int large_feature[7] = {1, 2, 4, 5, 9, 10, 11};
+	    }
+    }
+
     string fname;
-    // fname = string("../models/") + target + string("predictor_") + solver + string("solver.model");
-    fname = "./models/example.model";
+    fname = string("../models/") + target + string("predictor_") + solver + string("solver_") + preprocess + string(".model");
+    // fname = "./models/example.model";
 
     Model model = Model::load(fname);
 
-    // preprocess preparation
-    string fname_scale = string("./data/") + target + solver + string("scale.txt"); //change the path for your purpose
-    std::vector<float> scale = read_txt(fname_scale);
-
-    string fname_mean = string("./data/") + target + solver + string("mean.txt"); //change the path for your purpose
-    std::vector<float> mean = read_txt(fname_mean);
-
 	// load data
-	std::vector<std::vector<float>> test_data = {{4.0, 636978, 319378, 6, 97, 153367, 0.240773, 1, 0, 472, 213458, 269659, 0, 0, 0.423341}};
+	std::vector<std::vector<float>> test_data = {{4.0, 636978, 319378, 6, 97, 153367, 0.240773, 1, 0, 472, 213458, 269659, 0, 0, 0.423341}}; // this should be the input from MAPDL
 
 	// inference
 	std::vector<int> results;
@@ -57,33 +76,64 @@ int main() {
 	{	
 		int size = test_data.at(i).size();
 		Tensor in{size};
+		int m = 0;
 		
 		// preprocess
-		for (int j = 0; j < size; ++j)
-		{	
-			test_data.at(i).at(j) = (test_data.at(i).at(j) - mean.at(j))/scale.at(j);
-			cout << test_data.at(i).at(j) << " ";
+		if (preporcess == "standardize")
+		{
+			for (int j = 0; j < size; ++j)
+			{	
+				test_data.at(i).at(j) = (test_data.at(i).at(j) - mean.at(j))/scale.at(j);
+				cout << test_data.at(i).at(j) << " ";
+			}
+			cout << " " << "\n";
+		} else {
+			for (int j = 0; j < size; ++j)
+			{	
+				while (m < large_feature.size())
+				{
+					if(j == large_feature[m])
+					{
+						test_data.at(i).at(j) = log10(test_data.at(i).at(j) + 1)
+						cout << test_data.at(i).at(j) << " ";
+						m++;
+						break;
+					}
+					cout << test_data.at(i).at(j) << " ";
+					m++;
+				}
+
+			}
+			cout << " " << "\n";
 		}
-		cout << " " << "\n";
+
 
 		// run the model
 		in.data_ = test_data.at(i);
 		Tensor out = model(in);
 
 		//get the class
-		int max_cls = 0;
-		int max_score = 0;
-		for (int k = 0; k < 5; ++k)
-		{
-			if (out.data_[k] > max_score)
-			{
-				max_score = out.data_[k];
-				max_cls = k;
-			}
+		if (target == "time_")
+		{	
+			output = out.data_
+			cout << output << "\n";
 		}
-		results.push_back(max_cls);
+		else
+		{
+			int max_cls = 0;
+			int max_score = 0;
+			for (int k = 0; k < 5; ++k)
+			{
+				if (out.data_[k] > max_score)
+				{
+					max_score = out.data_[k];
+					max_cls = k;
+				}
+			}
+			results.push_back(max_cls);
 
-		cout << max_cls << "\n";
+			cout << max_cls << "\n";
+		}
 	}
 
    return 0;
