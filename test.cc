@@ -110,21 +110,21 @@ int main() {
     string solver = "sparse_";
     string fname;
     // fname = string("../models/") + target + string("predictor_") + solver + string("solver.model");
-    fname = "../models/example.model";
+    fname = "/home/ansysai/hjiang/projects/cpp_eval_keras/models/example.model";
 
     Model model = Model::load(fname);
 
     int test_samples = 10;
 
     // preprocess preparation
-    string fname_scale = string("../data/") + target + solver + string("scale.txt");
+    string fname_scale = string("/home/ansysai/hjiang/projects/cpp_eval_keras/data/") + target + solver + string("scale.txt");
     std::vector<float> scale = read_txt(fname_scale);
 
-    string fname_mean = string("../data/") + target + solver + string("mean.txt");
+    string fname_mean = string("/home/ansysai/hjiang/projects/cpp_eval_keras/data/") + target + solver + string("mean.txt");
     std::vector<float> mean = read_txt(fname_scale);
 
 	// load data
-	string fname_test_data = string("../data/") + target + solver + string("test_data.csv");
+	string fname_test_data = string("/home/ansysai/hjiang/projects/cpp_eval_keras/data/") + target + solver + string("test_data.csv");
 	std::vector<std::vector<float>> test_data = read_csv(fname_test_data);
 
 	// inference
@@ -138,7 +138,9 @@ int main() {
 		for (int j = 0; j < size; ++j)
 		{
 			test_data.at(i).at(j) = (test_data.at(i).at(j) - mean.at(j))/scale.at(j);
+			cout << out.data_[k] << " ";
 		}
+		cout << " " << "\n";
 
 		// run the model
 		in.data_ = test_data.at(i);
@@ -156,7 +158,8 @@ int main() {
 				max_cls = i;
 			}
 		}
-		cout << "\n";
+		cout << " " << "\n";
+
 		results.push_back(max_cls);
 	}
 
