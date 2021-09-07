@@ -96,9 +96,11 @@ int main() {
 				for (int m = 0; m < int(sizeof(large_feature)/sizeof(large_feature[0])); ++m)
 				{
 					if(j == large_feature[m])
-					{							
+					{	
+						cout << j << large_feature[m] << "\n";					
 						test_data.at(i).at(j) = log10(test_data.at(i).at(j) + 1);
 					}
+					cout << m << "\n";	
 				}
 				cout << test_data.at(i).at(j) << " ";
 			}
