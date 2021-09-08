@@ -118,9 +118,9 @@ std::vector<float> evaluate_time(std::string solver, std::vector<std::vector<flo
 }
 
 
-std::vector<float> evaluate_memory(std::string solver, std::vector<std::vector<float>> test_data)
+std::vector<int> evaluate_memory(std::string solver, std::vector<std::vector<float>> test_data)
 {   
-    std::vector<float> results;
+    std::vector<int> results;
     std::vector<float> mean;
     std::vector<float> scale;
     int class_size = 6;
