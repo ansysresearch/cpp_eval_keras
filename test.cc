@@ -110,7 +110,7 @@ std::vector<float> evaluate_time(std::string solver, std::vector<std::vector<flo
 
         float output = out.data_.at(0);
         results.push_back(output);
-        cout << output << "\n";
+        cout << "Time predicted: " << output << "\n";
 
     }
 
@@ -162,7 +162,7 @@ std::vector<int> evaluate_memory(std::string solver, std::vector<std::vector<flo
             }
         }
         results.push_back(max_cls);
-        cout << max_cls << "\n";
+        cout << "Memory class predicted: " << max_cls << "\n";
         
     }
 
