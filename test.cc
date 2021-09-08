@@ -76,7 +76,7 @@ std::vector<float> evaluate_time(std::string solver, std::vector<std::vector<flo
     std::vector<float> results;
     std::vector<int> large_feature;
 
-    if (solver == "_model_")
+    if (solver == "_modal_")
     {
         large_feature = {1, 2, 3, 5, 9, 10, 11};
     }
