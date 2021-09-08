@@ -171,8 +171,8 @@ std::vector<float> evaluate_memory(std::string solver, std::vector<std::vector<f
 
 int main() {
     // Use case
-    string ml_model_name = "memory_predictor"; // ["time_predictor", "memory_predictor"] 
-    string solver = "_sparse_"; // this should be the input from MAPDL, ["sparse_", "model_", "PCG_"]
+    string ml_model_name = "time_predictor"; // ["time_predictor", "memory_predictor"] 
+    string solver = "_sparse_"; // this should be the input from MAPDL, ["_sparse_", "_model_", "_PCG_"]
 
     // load data
     std::vector<std::vector<float>> test_data = {{4.0, 636978, 319378, 6, 97, 153367, 0.240773, 1, 0, 472, 213458, 269659, 0, 0, 0.423341}}; // this should be the input from MAPDL
@@ -191,11 +191,5 @@ int main() {
         results = evaluate_memory(solver, test_data);
     }
     
-
-    // save results
-    // string result_fname = string("results/") + ml_model_name + solver + string("solver_test_results1.txt");
-    // std::ofstream outFile(result_fname);
-    // for (const auto &e : results) outFile << e << "\n";
-
     return 0;
 }
