@@ -13,7 +13,7 @@ using keras2cpp::Tensor;
 
 
 std::vector<float> read_txt(std::string fname_scale) {
-    std::vector<float> contianer;
+    std::vector<float> container;
     string line;
 
     ifstream myfile(fname_scale);
@@ -23,7 +23,7 @@ std::vector<float> read_txt(std::string fname_scale) {
         while ( getline(myfile, line) )
         {
             cout << line << "\n";
-            contianer.push_back(std::stof(line));
+            container.push_back(std::stof(line));
         }
         myfile.close();
         i += 1;
@@ -33,7 +33,7 @@ std::vector<float> read_txt(std::string fname_scale) {
         cout << "FILE NOT FOUND" << "\n";
     }
 
-    return contianer;
+    return container;
 
 }
 
@@ -69,6 +69,7 @@ std::vector<float> preprocess_to_log10_scale(std::vector<float> sample, std::vec
 
     return sample;
 }
+
 
 std::vector<float> evaluate_time(std::string solver, std::vector<std::vector<float>> test_data)
 {   
@@ -124,10 +125,10 @@ std::vector<float> evaluate_memory(std::string solver, std::vector<std::vector<f
     std::vector<float> scale;
     int class_size = 6;
 
-    string fname_scale = string("./data/memory_predictor") + solver + string("scale.txt"); // "time_predictor_sparse_scale.txt"
+    string fname_scale = string("./data/memory_predictor") + solver + string("normal.txt"); // "time_predictor_sparse_normal.txt"
     scale = read_txt(fname_scale);
 
-    string fname_mean = string("./data/memory_predictor") + solver + string("mean.txt"); //change the path for your purpose
+    string fname_mean = string("./data/memory_predictor") + solver + string("mean.txt");
     mean = read_txt(fname_mean);
 
     // "time_predictor_sparse_solver_standardize.model"
@@ -171,25 +172,22 @@ std::vector<float> evaluate_memory(std::string solver, std::vector<std::vector<f
 
 int main() {
     // Use case
-    string ml_model_name = "time_predictor"; // ["time_predictor", "memory_predictor"] 
-    string solver = "_sparse_"; // this should be the input from MAPDL, ["_sparse_", "_model_", "_PCG_"]
+    // string ml_model_name = "time_predictor"; // ["time_predictor", "memory_predictor"] 
+    string solver = "_sparse_"; // this should be the input from MAPDL, ["_sparse_", "_modal_", "_PCG_"]
 
     // load data
-    std::vector<std::vector<float>> test_data = {{4.0, 636978, 319378, 6, 97, 153367, 0.240773, 1, 0, 472, 213458, 269659, 0, 0, 0.423341}}; // this should be the input from MAPDL
-
+    std::vector<std::vector<float>> test_data = {{4.0, 636978, 319378, 6, 97, 153367, 0.240773, 1, 0, 472, 213458, 269659, 0, 0, 0.423341}}; // this should be the input from outside
     cout << "DATA LOADED" << "\n";
 
     // evaluate
-    std::vector<float> results;
-    if (ml_model_name == "time_predictor")
-    {
-        results = evaluate_time(solver, test_data);
-    }
+    std::vector<float> time_results;
+    std::vector<int> memory_results;
 
-    if (ml_model_name == "memory_predictor")
-    {
-        results = evaluate_memory(solver, test_data);
-    }
+    time_results = evaluate_time(solver, test_data);
+    memory_results = evaluate_memory(solver, test_data);
     
     return 0;
 }
+
+
+
