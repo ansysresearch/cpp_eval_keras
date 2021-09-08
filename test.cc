@@ -5,6 +5,8 @@
 #include<vector>
 #include<ctime>
 #include <math.h>
+#include<sstream> // for testing, should be removed when delivered
+#include<utility> // for testing, should be removed when delivered
 
 using namespace std;
 
