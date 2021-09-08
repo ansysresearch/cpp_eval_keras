@@ -87,7 +87,7 @@ std::vector<float> evaluate_time(std::string solver, std::vector<std::vector<flo
     // string fname = string("./models/time_predictor") + solver + string("solver.model"); 
 
     // cout << fname << "\n";
-    string fname = string("/home/ansysai/hjiang/projects/haoliangjiang_cpp_eval_keras/cpp_eval_keras/models/time_predictor_sparse_solver.model");
+    string fname = string("./models/time_predictor") + solver + string("solver.model"); 
 
     Model model = Model::load(fname);
 
@@ -193,9 +193,9 @@ int main() {
     
 
     // save results
-    string result_fname = string("results/") + ml_model_name + solver + string("solver_test_results1.txt");
-    std::ofstream outFile(result_fname);
-    for (const auto &e : results) outFile << e << "\n";
+    // string result_fname = string("results/") + ml_model_name + solver + string("solver_test_results1.txt");
+    // std::ofstream outFile(result_fname);
+    // for (const auto &e : results) outFile << e << "\n";
 
     return 0;
 }
