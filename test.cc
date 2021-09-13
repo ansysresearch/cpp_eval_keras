@@ -123,7 +123,7 @@ std::vector<int> evaluate_memory(std::string solver, std::vector<std::vector<flo
     std::vector<int> results;
     std::vector<float> mean;
     std::vector<float> scale;
-    int class_size = 6;
+    int class_size = 9;
 
     string fname_scale = string("./data/memory_predictor") + solver + string("normal.txt"); // "time_predictor_sparse_normal.txt"
     scale = read_txt(fname_scale);
